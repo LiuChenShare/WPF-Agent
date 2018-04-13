@@ -184,17 +184,28 @@ namespace Titanium.Web.Proxy.Examples.Wpf
             Process = GetProcessDescription(WebSession.ProcessId.Value);
 
             //这里应该再次验证该请求有没有走通道，并给sentpUse赋值
-            //pUse = "√" or ""
+            //pUse = "✔" or "✘" or "-" 
             Rules _rules = Rules.GetRules();
             DomainMethod domain = new DomainMethod();
-            var AdoptRules = domain.GetAdoptRules(request.RequestUri.Host.GetRootHost(), request.RequestUri.AbsolutePath, _rules.DomainRules)?.RexStr;
-            if (AdoptRules != null && AdoptRules.Count > 0)
+
+            var blockadeRules = domain.GetBlockadeRules(request.RequestUri.Host, request.RequestUri.AbsolutePath);
+            if (blockadeRules.RexStr != null && blockadeRules.RexStr.Count > 0)
             {
-                pUse = "√";
+                //说明进了黑名单匹配
+                pUse = "✘";
             }
             else
             {
-                pUse = "-";
+                var adoptRules = domain.GetAdoptRules(request.RequestUri.Host, request.RequestUri.AbsolutePath);
+                if (adoptRules.RexStr != null && adoptRules.RexStr.Count > 0)
+                {
+                    //说明通过了白名单匹配
+                    pUse = "✔";
+                }
+                else
+                {
+                    pUse = "-";
+                }
             }
         }
 

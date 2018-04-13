@@ -23,7 +23,7 @@
             <!--停靠布局，让菜单栏和工具栏位于窗口顶部-->
             <Menu DockPanel.Dock="Top">
                 <Button Content="加载" Height="30" Width="60" Click="Button_Click"/>
-                <Button Content="保存" Height="30" Width="60" Click="Button_Click_1"/>
+                <!--<Button Content="保存" Height="30" Width="60" Click="Button_Click_1"/>-->
                 <Button Content="清空" Height="30" Width="60" Click="Button_Click_2"/>
             </Menu>
         </DockPanel>
@@ -54,7 +54,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <TextBox AcceptsReturn="True" x:Name="AdoptRules" Grid.Row="0" Foreground="Blue"/>
-                    <TextBox AcceptsReturn="True" x:Name="Rule" Margin="0,100,0,0" Grid.RowSpan="2" />
+                    <TextBox AcceptsReturn="True" x:Name="BlockadeRule" Grid.Row="1" Foreground="Red"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Session">

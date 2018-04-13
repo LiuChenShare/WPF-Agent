@@ -66,7 +66,7 @@ namespace Titanium.Web.Proxy.Examples.Wpf
             MainWindow.OnSelectedSessionChanged += () =>
             {
                 _onMainWindowSelectSessionChanged();
-                _onMainWindowRule(mainWindow._rules.DomainRules);
+                _onMainWindowRule();
             };
 
             proxyServer = new ProxyServer();
@@ -270,35 +270,37 @@ namespace Titanium.Web.Proxy.Examples.Wpf
             MainWindow.TextBoxResponse.Text = sb.ToString();
         }
 
-        private void _onMainWindowRule(List<DomainRules> domainRules)
+        private void _onMainWindowRule()
         {
             if (SelectedSession == null)
             {
                 return;
             }
             DomainMethod domain = new DomainMethod();
+            var blockadeRules = domain.GetBlockadeRules(SelectedSession.Host, SelectedSession.Url);
 
-            var rootHost = SelectedSession.Host.GetRootHost();
-
-            var AdoptRules = domain.GetAdoptRules(rootHost, SelectedSession.Url, domainRules)?.RexStr;
-            var Rules = domainRules.Where(x => x.Host == rootHost).FirstOrDefault()?.RexStr;
-
-            MainWindow.Host.Content = rootHost;
+            MainWindow.Host.Content = SelectedSession.Host;
             MainWindow.AdoptRules.Text = null;
-            MainWindow.Rule.Text = null;
-            if (AdoptRules != null && AdoptRules.Count != 0)
+            MainWindow.BlockadeRule.Text = null;
+
+            if (blockadeRules.RexStr != null && blockadeRules.RexStr.Count > 0)
             {
-                var adoptRulesStr = String.Join("\n", AdoptRules.ToArray());
-                //MainWindow.AdoptRules.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(adoptRulesStr));
-                MainWindow.AdoptRules.Text = "通过验证的正则为：\n" + adoptRulesStr;
+                //说明进了黑名单匹配
+                var blockadeRulesStr = String.Join("\n", blockadeRules.RexStr.ToArray());
+                MainWindow.Host.Content = blockadeRules.Host;
+                MainWindow.BlockadeRule.Text = "受到限制的正则为：\n" + blockadeRulesStr;
             }
-            if (Rules != null)
+            else
             {
-                var rulesStr = String.Join("\n", Rules.ToArray());
-                //MainWindow.Rules.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(rulesStr));
-                MainWindow.Rule.Text = rulesStr;
+                var adoptRules = domain.GetAdoptRules(SelectedSession.Host, SelectedSession.Url);
+                if (adoptRules.RexStr != null && adoptRules.RexStr.Count > 0)
+                {
+                    //说明通过了白名单匹配
+                    var adoptRulesStr = String.Join("\n", adoptRules.RexStr.ToArray());
+                    MainWindow.Host.Content = adoptRules.Host;
+                    MainWindow.AdoptRules.Text = "通过验证的正则为：\n" + adoptRulesStr;
+                }
             }
-            
         }
     }
 }

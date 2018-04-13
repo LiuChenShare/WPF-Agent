@@ -32,19 +32,29 @@ namespace Titanium.Web.Proxy.Examples.Wpf
         {
             Rules _rules = Rules.GetRules();
             DomainMethod domain = new DomainMethod();
-            var AdoptRules = domain.GetAdoptRules(args.WebSession.Request.RequestUri.Host.GetRootHost(), args.WebSession.Request.RequestUri.AbsolutePath, _rules.DomainRules)?.RexStr;
+            bool adopt = false;
+            
+            var blockadeRules = domain.GetBlockadeRules(args.WebSession.Request.RequestUri.Host, args.WebSession.Request.RequestUri.AbsolutePath);
+            if (blockadeRules.RexStr != null && blockadeRules.RexStr.Count > 0)
+            {
+                //说明进了黑名单匹配
+            }
+            else
+            {
+                var adoptRules = domain.GetAdoptRules(args.WebSession.Request.RequestUri.Host, args.WebSession.Request.RequestUri.AbsolutePath);
+                if (adoptRules.RexStr != null && adoptRules.RexStr.Count > 0)
+                {
+                    //说明通过了白名单匹配
+                    adopt = true;
+                }
+            }
+
             //if (args.WebSession.Request.Url.Contains("google.com"))
             //{
             //    args.IsUseExternalProxy = true;
             //}
-            if (AdoptRules!=null && AdoptRules.Count > 0)
-            {
-                args.IsUseExternalProxy = true;
-            }
-            else
-            {
-                args.IsUseExternalProxy = false;
-            }
+
+            args.IsUseExternalProxy = adopt;
 
             // return proxy
             if (args.IsUseExternalProxy)

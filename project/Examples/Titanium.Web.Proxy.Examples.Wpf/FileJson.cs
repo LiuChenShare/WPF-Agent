@@ -14,14 +14,19 @@ namespace Titanium.Web.Proxy.Examples.Wpf
         /// 读取配置文件
         /// </summary>
         /// <returns></returns>
-        public List<DomainRules> GetResult()
+        public RulesResult GetResult(string path)
         {
+            RulesResult rulesResult = new RulesResult();
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
-            string filepath = basePath + "/Model.json";
+            string filepath = basePath + "/" + path + ".json";
             var result = GetFileJson(filepath);
 
             List<DomainRules> list = JsonConvert.DeserializeObject<List<DomainRules>>(result);
-            return list;
+            var wildcard = list.Where(x => x.Host.StartsWith("*")).Select(x => x.ToWildcardRules()).ToList();
+            rulesResult.Rules = list;
+            rulesResult.WildcardRules = wildcard;
+
+            return rulesResult;
         }
 
         /// <summary>
@@ -30,22 +35,22 @@ namespace Titanium.Web.Proxy.Examples.Wpf
         /// <param name="result"></param>
         public void SetResult(List<DomainRules> result)
         {
-            string basePath = AppDomain.CurrentDomain.BaseDirectory;
-            string filepath = basePath + "/Model.json";
-            var infos = GetResult();
-            foreach (var item in result)
-            {
-                if (infos.Where(x => x.Host == item.Host).FirstOrDefault() != null)
-                {
-                    infos.Where(x => x.Host == item.Host).FirstOrDefault().RexStr = item.RexStr;
-                }
-                else
-                {
-                    infos.Add(item);
-                }
-            }
-            string json = JsonConvert.SerializeObject(infos);
-            SetFileJson(filepath, json);
+            //string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            //string filepath = basePath + "/Model.json";
+            //var infos = GetResult();
+            //foreach (var item in result)
+            //{
+            //    if (infos.Where(x => x.Host == item.Host).FirstOrDefault() != null)
+            //    {
+            //        infos.Where(x => x.Host == item.Host).FirstOrDefault().RexStr = item.RexStr;
+            //    }
+            //    else
+            //    {
+            //        infos.Add(item);
+            //    }
+            //}
+            //string json = JsonConvert.SerializeObject(infos);
+            //SetFileJson(filepath, json);
         }
 
         /// <summary>

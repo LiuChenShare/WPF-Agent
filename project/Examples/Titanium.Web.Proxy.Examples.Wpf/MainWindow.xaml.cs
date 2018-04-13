@@ -22,8 +22,7 @@ namespace Titanium.Web.Proxy.Examples.Wpf
     public partial class MainWindow : Window
     {
         public ObservableCollection<SessionListItem> Sessions { get; } = new ObservableCollection<SessionListItem>();
-
-        public Rules _rules = Rules.GetRules();
+        
 
         public SessionListItem SelectedSession
         {
@@ -73,20 +72,18 @@ namespace Titanium.Web.Proxy.Examples.Wpf
         //读取
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            FileJson fileJson = new FileJson();
-            var result = fileJson.GetResult();
-            _rules.DomainRules = result;
+            Rules.GetRules(true);
             MessageBox.Show("读取配置文件成功！");
         }
 
         //保存
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            SaveRules();
-            FileJson fileJson = new FileJson();
-            //fileJson.SetResult(new List<DomainRules>() { new DomainRules() { Host = "baidu.com", RexStr = new List<string>() { "dadwa","dwadaw"} } });
-            fileJson.SetResult(_rules.DomainRules);
-            MessageBox.Show("保存配置文件成功！");
+            //SaveRules();
+            //FileJson fileJson = new FileJson();
+            ////fileJson.SetResult(new List<DomainRules>() { new DomainRules() { Host = "baidu.com", RexStr = new List<string>() { "dadwa","dwadaw"} } });
+            //fileJson.SetResult(_rules.DomainRules);
+            //MessageBox.Show("保存配置文件成功！");
         }
 
         //清空
@@ -99,27 +96,27 @@ namespace Titanium.Web.Proxy.Examples.Wpf
         //保存修改的正则
         private void SaveRules()
         {
-            var host = this.Host.Content.ToString().GetRootHost();
-            var rulesStr = this.Rule.Text;
-            var domainRule = _rules.DomainRules.Where(x => x.Host == host).FirstOrDefault();
-            var rulesList = new List<string>();
-            if (rulesStr != null)
-            {
-                var rules = System.Text.RegularExpressions.Regex.Split(this.Rule.Text, "\n");
-                if (rules.Count() > 0)
-                {
-                    rulesList = rules.ToList();
-                }
-            }
+            //var host = this.Host.Content.ToString().GetRootHost();
+            //var rulesStr = this.Rule.Text;
+            //var domainRule = _rules.DomainRules.Where(x => x.Host == host).FirstOrDefault();
+            //var rulesList = new List<string>();
+            //if (rulesStr != null)
+            //{
+            //    var rules = System.Text.RegularExpressions.Regex.Split(this.Rule.Text, "\n");
+            //    if (rules.Count() > 0)
+            //    {
+            //        rulesList = rules.ToList();
+            //    }
+            //}
 
-            if (domainRule != null)
-            {
-                _rules.DomainRules.Where(x => x.Host == host).FirstOrDefault().RexStr = rulesList;
-            }
-            else
-            {
-                _rules.DomainRules.Add(new Wpf.DomainRules() { Host = host, RexStr = rulesList });
-            }
+            //if (domainRule != null)
+            //{
+            //    _rules.DomainRules.Where(x => x.Host == host).FirstOrDefault().RexStr = rulesList;
+            //}
+            //else
+            //{
+            //    _rules.DomainRules.Add(new Wpf.DomainRules() { Host = host, RexStr = rulesList });
+            //}
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,21 +29,73 @@ namespace Titanium.Web.Proxy.Examples.Wpf
     /// </summary>
     public class Rules
     {
-        public List<DomainRules> DomainRules { get; set; }
+        //public List<DomainRules> DomainRules { get; set; }
+
+        /// <summary>
+        /// 白名单(哈希表)
+        /// </summary>
+        public Hashtable WhiteRules { get; set; }
+        /// <summary>
+        /// 带通配符的白名单
+        /// </summary>
+        public List<DomainRules> WhiteWildcardRules { get; set; }
+
+        /// <summary>
+        /// 黑名单
+        /// </summary>
+        public Hashtable BlackRules { get; set; }
+        /// <summary>
+        /// 带通配符的黑名单
+        /// </summary>
+        public List<DomainRules> BlackWildcardRules { get; set; }
 
         private static Rules _rules = null;
 
-        public static Rules GetRules()
+        /// <summary>
+        /// 获取规则信息
+        /// </summary>
+        /// <param name="refresh">是否刷新</param>
+        /// <returns></returns>
+        public static Rules GetRules(bool refresh = false)
         {
-            if(_rules == null)
+            if (_rules == null || refresh)
             {
                 _rules = new Rules();
-                _rules.DomainRules = new List<DomainRules>();
+                _rules.WhiteRules = new Hashtable();
+                _rules.WhiteWildcardRules = new List<DomainRules>();
+                _rules.BlackRules = new Hashtable();
+                _rules.BlackWildcardRules = new List<DomainRules>();
+                
                 FileJson fileJson = new FileJson();
-                var result = fileJson.GetResult();
-                _rules.DomainRules = result;
+                var whiteResult = fileJson.GetResult("Whitelist");
+                var blackResult = fileJson.GetResult("Blacklist");
+                foreach (var item in whiteResult.Rules)
+                {
+                    _rules.WhiteRules.Add(item.Host, item.RexStr);
+                }
+                _rules.WhiteWildcardRules = whiteResult.WildcardRules;
+                foreach (var item in blackResult.Rules)
+                {
+                    _rules.BlackRules.Add(item.Host, item.RexStr);
+                }
+                _rules.BlackWildcardRules = blackResult.WildcardRules;
             }
             return _rules;
         }
+    }
+
+    /// <summary>
+    /// 通过读取文件获取的规则信息
+    /// </summary>
+    public class RulesResult
+    {
+        /// <summary>
+        /// 全配规则
+        /// </summary>
+        public List<DomainRules> Rules { get; set; }
+        /// <summary>
+        /// 通配规则
+        /// </summary>
+        public List<DomainRules> WildcardRules { get; set; }
     }
 }
