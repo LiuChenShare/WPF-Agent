@@ -1,0 +1,8 @@
+*.meta
+packages/*
+.vs
+Scripts/**/bin/
+Scripts/**/obj/
+Scripts/**/DreamerSource
+Debug/
+UnitTestProject1/
