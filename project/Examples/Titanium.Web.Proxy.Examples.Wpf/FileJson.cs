@@ -11,7 +11,7 @@ namespace Titanium.Web.Proxy.Examples.Wpf
     public class FileJson
     {
         /// <summary>
-        /// 读取配置文件
+        /// 读取规则配置文件
         /// </summary>
         /// <returns></returns>
         public RulesResult GetResult(string path)

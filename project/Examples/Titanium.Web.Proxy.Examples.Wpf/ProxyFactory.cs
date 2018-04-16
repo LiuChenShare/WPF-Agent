@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Titanium.Web.Proxy.EventArguments;
 using Titanium.Web.Proxy.Models;
+using System.Configuration;
 
 namespace Titanium.Web.Proxy.Examples.Wpf
 {
@@ -16,8 +17,8 @@ namespace Titanium.Web.Proxy.Examples.Wpf
 
             _externalProxy = new ExternalProxy
             {
-                HostName = "127.0.0.1",
-                Port = 8888,
+                HostName = ConfigurationManager.AppSettings["HostName"] ?? "127.0.0.1",
+                Port = int.Parse(ConfigurationManager.AppSettings["Port"] ?? "8888"),
             };
             
             return _externalProxy;

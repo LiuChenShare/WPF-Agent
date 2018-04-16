@@ -73,6 +73,9 @@ namespace Titanium.Web.Proxy.Examples.Wpf
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Rules.GetRules(true);
+            
+            //var b = System.Configuration.ConfigurationManager.AppSettings["Path"];
+
             MessageBox.Show("读取配置文件成功！");
         }
 
