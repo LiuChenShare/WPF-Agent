@@ -25,9 +25,12 @@
                 <Button Content="加载" Height="30" Width="60" Click="Button_Click"/>
                 <!--<Button Content="保存" Height="30" Width="60" Click="Button_Click_1"/>-->
                 <Button Content="清空" Height="30" Width="60" Click="Button_Click_2"/>
+                <TextBox x:Name="SouSuo" Height="30" TextWrapping="Wrap" Text="TextBox" Width="200"/>
+                <Button Content="搜索" Height="25" Width="30" Click="Button_Click_3"/>
+                <Button Content="X" Height="25" Width="30" Click="Button_Click_4"/>
             </Menu>
         </DockPanel>
-        <ListView Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" ItemsSource="{Binding Sessions}" SelectedItem="{Binding SelectedSession}"
+        <ListView x:Name="List1"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" ItemsSource="{Binding Sessions}" SelectedItem="{Binding SelectedSession}"
 				  KeyDown="ListViewSessions_OnKeyDown" SelectionChanged="ListView_SelectionChanged" Margin="0,35,0,5" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>

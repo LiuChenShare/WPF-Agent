@@ -118,5 +118,28 @@ namespace Titanium.Web.Proxy.Examples.Wpf
             //    _rules.DomainRules.Add(new Wpf.DomainRules() { Host = host, RexStr = rulesList });
             //}
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            if (this.SouSuo.Text !=null)
+            {
+                //this.List1.Items.Clear();
+                this.List1.ItemsSource = null;
+                foreach (var item in Sessions.Where(x => x.Host.Contains(this.SouSuo.Text)).ToList())
+                {
+                    this.List1.Items.Add(item);
+                }
+            }
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            //foreach (var item in Sessions)
+            //{
+            //    this.List1.Items.Add(item);
+            //}
+            this.List1.Items.Clear();
+            this.List1.ItemsSource = Sessions;
+        }
     }
 }
