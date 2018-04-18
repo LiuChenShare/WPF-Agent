@@ -67,8 +67,10 @@ namespace Titanium.Web.Proxy.Examples.Wpf
                 _rules.BlackWildcardRules = new List<DomainRules>();
                 
                 FileJson fileJson = new FileJson();
-                var whiteResult = fileJson.GetResult("Whitelist");
-                var blackResult = fileJson.GetResult("Blacklist");
+                var fileModel = fileJson.GetResult("RuleList");
+                var whiteResult = (fileModel.Whitelist ?? new List<DomainRules>()).ToRulesResult();
+                var blackResult = (fileModel.Blacklist ?? new List<DomainRules>()).ToRulesResult();
+            
                 foreach (var item in whiteResult.Rules)
                 {
                     _rules.WhiteRules.Add(item.Host, item.RexStr);
@@ -97,5 +99,20 @@ namespace Titanium.Web.Proxy.Examples.Wpf
         /// 通配规则
         /// </summary>
         public List<DomainRules> WildcardRules { get; set; }
+    }
+
+    /// <summary>
+    /// 保存在文件中的规则信息
+    /// </summary>
+    public class RulesFile
+    {
+        /// <summary>
+        /// 白名单
+        /// </summary>
+        public List<DomainRules> Whitelist { get; set; }
+        /// <summary>
+        /// 黑名单
+        /// </summary>
+        public List<DomainRules> Blacklist { get; set; }
     }
 }

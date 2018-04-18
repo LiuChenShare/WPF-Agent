@@ -14,19 +14,15 @@ namespace Titanium.Web.Proxy.Examples.Wpf
         /// 读取规则配置文件
         /// </summary>
         /// <returns></returns>
-        public RulesResult GetResult(string path)
+        public RulesFile GetResult(string path)
         {
-            RulesResult rulesResult = new RulesResult();
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
             string filepath = basePath + "/" + path + ".json";
             var result = GetFileJson(filepath);
 
-            List<DomainRules> list = JsonConvert.DeserializeObject<List<DomainRules>>(result);
-            var wildcard = list.Where(x => x.Host.StartsWith("*")).Select(x => x.ToWildcardRules()).ToList();
-            rulesResult.Rules = list;
-            rulesResult.WildcardRules = wildcard;
+            var fileModel = JsonConvert.DeserializeObject<RulesFile>(result);
 
-            return rulesResult;
+            return fileModel;
         }
 
         /// <summary>

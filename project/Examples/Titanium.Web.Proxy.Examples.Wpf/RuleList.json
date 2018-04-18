@@ -1,0 +1,24 @@
+﻿{
+  "Whitelist": [
+    {
+      "Host": "*.iqiyi.com",
+      "RexStr": [
+        "/zongyi/"
+      ]
+    },
+    {
+      "Host": "github.com",
+      "RexStr": [
+        "/LiuChenShare/"
+      ]
+    }
+  ],
+  "Blacklist": [
+    {
+      "Host": "*.iqiyi.com",
+      "RexStr": [
+        "/dianshiju/"
+      ]
+    }
+  ]
+}
