@@ -1,24 +1,27 @@
 ﻿{
   "Whitelist": [
     {
-      "Host": "*.iqiyi.com",
+      "Host": "iqiyi.com",
       "RexStr": [
         "/zongyi/"
-      ]
+      ],
+      "Wildcard": "true"
     },
     {
       "Host": "github.com",
       "RexStr": [
         "/LiuChenShare/"
-      ]
+      ],
+      "Wildcard": "false"
     }
   ],
   "Blacklist": [
     {
-      "Host": "*.iqiyi.com",
+      "Host": "iqiyi.com",
       "RexStr": [
         "/dianshiju/"
-      ]
+      ],
+      "Wildcard": "true"
     }
   ]
 }

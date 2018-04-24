@@ -17,44 +17,7 @@ namespace Titanium.Web.Proxy.Examples.Wpf
         public DomainRules GetAdoptRules(string host, string url)
         {
             var rule = Rules.GetRules();
-            var rexStr = new List<string>();
-            var adoptRules = new DomainRules()
-            {
-                Host = host,
-                RexStr = new List<string>()
-            };
-            if (rule.WhiteRules.Contains(host))
-            {
-                rexStr = (List<string>)rule.WhiteRules[host];
-            }
-            else
-            {
-                foreach (var whiteWildcardRules in rule.WhiteWildcardRules)
-                {
-                    if (host.Length >= whiteWildcardRules.Host.Length)
-                    {
-                        string str = host.Substring(host.Length - whiteWildcardRules.Host.Length);
-                        if (string.Equals(str, whiteWildcardRules.Host, StringComparison.OrdinalIgnoreCase))
-                        {
-                            adoptRules.Host = "*" + whiteWildcardRules.Host;
-                            rexStr = whiteWildcardRules.RexStr;
-                        }
-                    }
-                }
-            }
-            foreach (var pattern in rexStr)
-            {
-                if (Regex.IsMatch(url, pattern))
-                {
-                    //正则通过，把符合的正则存下来
-                    adoptRules.RexStr.Add(pattern);
-                }
-                //if (url.Contains(pattern))
-                //{
-                //    Rules.RexStr.Add(pattern);
-                //}
-            }
-            return adoptRules;
+            return GetDomainRules(host, url, rule.WhiteRules, rule.WhiteWildcardRules);
         }
 
         /// <summary>
@@ -65,41 +28,8 @@ namespace Titanium.Web.Proxy.Examples.Wpf
         /// <returns></returns>
         public DomainRules GetBlockadeRules(string host, string url)
         {
-            var rule = Rules.GetRules();
-            var rexStr = new List<string>();
-            var blockadeRules = new DomainRules()
-            {
-                Host = host,
-                RexStr = new List<string>()
-            };
-            if (rule.BlackRules.Contains(host))
-            {
-                rexStr = (List<string>)rule.BlackRules[host];
-            }
-            else
-            {
-                foreach (var blackWildcardRules in rule.BlackWildcardRules)
-                {
-                    if(host.Length >= blackWildcardRules.Host.Length)
-                    {
-                        string str = host.Substring(host.Length - blackWildcardRules.Host.Length);
-                        if (string.Equals(str, blackWildcardRules.Host, StringComparison.OrdinalIgnoreCase))
-                        {
-                            blockadeRules.Host = "*" + blackWildcardRules.Host;
-                            rexStr = blackWildcardRules.RexStr;
-                        }
-                    }
-                }
-            }
-            foreach (var pattern in rexStr)
-            {
-                if (Regex.IsMatch(url, pattern))
-                {
-                    //正则通过，把符合的正则存下来
-                    blockadeRules.RexStr.Add(pattern);
-                }
-            }
-            return blockadeRules;
+            var rule = Rules.GetRules(); 
+            return GetDomainRules(host, url, rule.BlackRules, rule.BlackWildcardRules);
         }
 
         /// <summary>
@@ -131,17 +61,24 @@ namespace Titanium.Web.Proxy.Examples.Wpf
                         string str = host.Substring(host.Length - rules.Host.Length);
                         if (string.Equals(str, rules.Host, StringComparison.OrdinalIgnoreCase))
                         {
-                            blockadeRules.Host = "*" + rules.Host;
-                            rexStr = rules.RexStr;
+                            if (host.Length > rules.Host.Length && host.Substring(host.Length - rules.Host.Length - 1).StartsWith("."))
+                            {
+                            }
+                            else
+                            {
+                                //blockadeRules.Host = "*" + rules.Host;
+                                blockadeRules.Host = rules.Host;
+                                rexStr = rules.RexStr;
+                            }
                         }
                     }
-                    else if (host.Length == rules.Host.Length - 1 && rules.Host.StartsWith(".") && rules.Host.Length >= 2)
-                    {
-                        //这里是为了在配置rule时配置的"*.iqiyi.com"可以同时支持"XXXX.iqiyi.com"和"iqiyi.com"
-                        if (string.Equals(host, rules.Host.Substring(1), StringComparison.OrdinalIgnoreCase))
-                        {
-                        }
-                    }
+                    //else if (host.Length == rules.Host.Length - 1 && rules.Host.StartsWith(".") && rules.Host.Length >= 2)
+                    //{
+                    //    //这里是为了在配置rule时配置的"*.iqiyi.com"可以同时支持"XXXX.iqiyi.com"和"iqiyi.com"
+                    //    if (string.Equals(host, rules.Host.Substring(1), StringComparison.OrdinalIgnoreCase))
+                    //    {
+                    //    }
+                    //}
                 }
             }
             foreach (var pattern in rexStr)
@@ -208,8 +145,10 @@ namespace Titanium.Web.Proxy.Examples.Wpf
         public static RulesResult ToRulesResult(this List<DomainRules> list)
         {
             RulesResult model = new RulesResult();
-            var wildcard = list.Where(x => x.Host.StartsWith("*")).Select(x => x.ToWildcardRules()).ToList();
-            model.Rules = list;
+            //var wildcard = list.Where(x => x.Host.StartsWith("*")).Select(x => x.ToWildcardRules()).ToList();
+            //model.Rules = list;
+            model.Rules = list.Where(x => !x.Wildcard).ToList();
+            var wildcard = list.Where(x => x.Wildcard).ToList();
             model.WildcardRules = wildcard;
             return model;
         }

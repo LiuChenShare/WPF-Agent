@@ -22,6 +22,10 @@ namespace Titanium.Web.Proxy.Examples.Wpf
         /// </summary>
         public List<string> RexStr { get; set; }
 
+        /// <summary>
+        /// 是否统配
+        /// </summary>
+        public bool Wildcard { get; set; }
     }
 
     /// <summary>
