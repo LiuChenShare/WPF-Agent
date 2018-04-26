@@ -1,0 +1,61 @@
+﻿
+更新记录
+2017-2-15
+新增窗体模式：扁平化+阴影
+
+
+
+使用说明:
+
+1.引用LinKu.UI.DLL
+2.MainWindow : DMSkinWindow
+3.xmlns:DMSkin="clr-namespace:LinKu.UI;assembly=LinKu.UI"
+4.<DMSkin:DMSkinWindow x:Class="LinKu.UI.Test.MainWindow"
+
+属性:
+
+//    Shadow        Metro
+//           
+
+
+
+ 
+                
+        Background="Transparent"         
+        DMWindow="Shadow"
+        DMShowMin="True"
+        DMShowMax="True"
+        DMShadowSize="10"
+        DMTitleSize="30"
+        DMTitleColor="Black"
+        DMShadowColor="#88000000"
+        DMBorderColor="Black" 
+        DMBorderSize="1"
+        ResizeMode="CanResizeWithGrip"
+        Title="MainWindow" Height="400" Width="680"
+        WindowStyle="None" 
+		WindowStartupLocation="CenterScreen"
+
+
+
+
+<Application.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="pack://application:,,,/LinKu.UI;Component/Themes/DMSkin.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/LinKu.UI;Component/Themes/DMColor.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/LinKu.UI;Component/Themes/DMScrollViewer.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/LinKu.UI;component/Themes/DMButton.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/LinKu.UI;component/Themes/DMTabControl.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/LinKu.UI;component/Themes/DMRadioButton.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/LinKu.UI;component/Themes/DMTreeView.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/LinKu.UI;component/Themes/DMDataGrid.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/LinKu.UI;component/Themes/DMListBox.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/LinKu.UI;component/Themes/DMSlider.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/LinKu.UI;component/Themes/DMCheckBox.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+</Application.Resources>
+
+
+

@@ -1,0 +1,34 @@
+﻿<DMSkin:DMSkinWindow x:Class="LinKu.WindowBall"
+        xmlns:DMSkin="clr-namespace:LinKu.UI;assembly=LinKu.UI"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LinKu"
+        xmlns:Controls="clr-namespace:LinKu.UI.Controls;assembly=LinKu.UI" 
+        mc:Ignorable="d"
+                     
+        Background="Transparent"         
+        DMWindow="Shadow"
+        DMShowMin="False"
+        DMShowMax="False"
+        DMShowClose="False"
+        DMShadowSize="5"
+        DMTitleSize="30"
+        DMTitleColor="Black"
+        DMShadowColor="#11000000"
+        DMBorderColor="#11000000" 
+        DMBorderSize="1"
+        ResizeMode="CanResizeWithGrip"
+        Title="{StaticResource AppName}" Height="100" Width="100"
+        WindowStyle="None" 
+		WindowStartupLocation="CenterScreen">
+    <Grid  Width="80" Height="80">
+        <Border Background="White" CornerRadius="40">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="6" ShadowDepth="0"/>
+            </Border.Effect>
+            <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center">加速球</Label>
+        </Border>
+    </Grid>
+</DMSkin:DMSkinWindow>

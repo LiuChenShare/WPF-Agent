@@ -1,0 +1,155 @@
+﻿<DMSkin:DMSkinWindow x:Class="LinKu.WindowMain"
+        xmlns:DMSkin="clr-namespace:LinKu.UI;assembly=LinKu.UI"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LinKu"
+        xmlns:windows="clr-namespace:LinKu.Windows"
+        mc:Ignorable="d"         
+        DMWindow="Shadow"
+        DMShowMin="True"
+        DMShowMax="False"
+        DMShadowSize="5"
+        DMTitleSize="40"
+        DMTitleColor="White"
+        DMShadowColor="#11000000"
+        DMBorderColor="#11000000" 
+        DMBorderSize="1"
+        ResizeMode="CanResizeWithGrip"
+        Title="{StaticResource AppName}" Height="540" Width="880"
+        MinHeight="540"  MinWidth="880"  MaxHeight="580" MaxWidth="980"
+        WindowStyle="None" 
+		WindowStartupLocation="CenterScreen"
+        Loaded="DMSkinWindow_Loaded"
+        Foreground="White" 
+        Background="{DynamicResource MainBackColor}"
+        TextOptions.TextFormattingMode="display" 
+        TextOptions.TextRenderingMode="ClearType"
+        FontFamily="{StaticResource MainFont}">
+    <Grid Name="MainBack">
+        <Grid>
+            <Border HorizontalAlignment="Left" Width="180" Background="{DynamicResource MainLeftBackColor}" Margin="0,40,0,0"></Border>
+            <TabControl Name="MainTab" TabStripPlacement="Left" Style="{StaticResource LeftTabControl}" Margin="0,45,0,0">
+                <TabItem  Name="TabSpeed"  Header="一键加速" Tag="&#xe66d;" Style="{StaticResource LeftTabItem}">
+                    <windows:WindowStarter x:Name="windowstarter"></windows:WindowStarter>
+                </TabItem>
+                <!--<TabItem Name="TabGame"  Header="全部游戏" Tag="&#xe61d;" Style="{StaticResource LeftTabItem}">
+                    <windows:WindowGame></windows:WindowGame>
+                </TabItem>-->
+                <TabItem Header="会员充值" Tag="&#xe671;" Style="{StaticResource LeftTabItem}">
+                    <windows:WindowRecharge Margin="0,0,0,40"></windows:WindowRecharge>
+                </TabItem>
+                <TabItem Header="消息列表" Tag="&#xe668;" Style="{StaticResource LeftTabItem}">
+                    <windows:WindowMessage></windows:WindowMessage>
+                </TabItem>
+                <!--<TabItem Header="积分商城" Tag="&#xe603;" Style="{StaticResource LeftTabItem}">
+                </TabItem>
+                <TabItem Header="实用工具" Tag="&#xe630;" Style="{StaticResource LeftTabItem}">
+                    <windows:WindowTool></windows:WindowTool>
+                </TabItem>-->
+                <TabItem Name="TabSkin" Height="0" Style="{StaticResource LeftTabItem}">
+                    <windows:WindowSkin>
+                    </windows:WindowSkin>
+                </TabItem>
+            </TabControl>
+            <Border CornerRadius="10" Width="180" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,65,0,0">
+                <StackPanel VerticalAlignment="Top">
+                    <!--头像-->
+                    <Grid>
+                        <Border Width="{Binding ElementName=Header,Path=ActualWidth}" Height="{Binding ElementName=Header,Path=ActualHeight}" Background="White"   CornerRadius="60" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="20" ShadowDepth="0" />
+                            </Border.Effect>
+                        </Border>
+                        <Ellipse Name="Header" Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="/LinKu;component/Resources/head.jpg" Stretch="UniformToFill">
+                                </ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                        <TextBlock  Margin="15,0,0,0" 
+                         Text="欢迎回来," FontWeight="Black">
+                        </TextBlock>
+                        <TextBlock Name="tbUserName" MaxWidth="110"  TextTrimming="CharacterEllipsis"
+                         Text="Dream.Machine" FontWeight="Black">
+                        </TextBlock>
+                    </StackPanel>
+                    <Grid Margin="0,10,0,0" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="40"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Name="tbUsexr"  FontSize="23"
+                         Text="&#xe695;"  FontFamily="{StaticResource IconFont}"
+                          HorizontalAlignment="Center">
+                            </TextBlock>
+                            <TextBlock Name="tbUserNsame"  
+                         Text="36天" FontWeight="Black" Margin="0,7,0,0" 
+                          HorizontalAlignment="Center" FontSize="9" FontFamily="宋体">
+                            </TextBlock>
+                        </StackPanel>
+                        <Border  BorderBrush="#66FFFFFF" Margin="0,5,0,0" HorizontalAlignment="Center" Grid.Column="1" BorderThickness="1,0,0,0"></Border>
+                        <StackPanel Orientation="Vertical" Grid.Column="2">
+                            <TextBlock Name="tbUsecxr"    FontSize="23"
+                         Text="&#xe653;"  FontFamily="{StaticResource IconFont}"
+                          HorizontalAlignment="Center">
+                            </TextBlock>
+                            <TextBlock Name="tbUserNcsame"  
+                         Text="充值"  FontWeight="Black" Margin="0,7,0,0" 
+                          HorizontalAlignment="Center" FontSize="9" FontFamily="宋体">
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                    <Border Margin="0,12,0,0" BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0"></Border>
+                </StackPanel>
+            </Border>
+            <Border Height="40"  VerticalAlignment="Top"  Style="{StaticResource MainLeftBack}">
+                <Grid>
+                    <Grid Margin="0,0,80,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Margin="10,0,0,0" Content="{StaticResource AppName}" FontFamily="{StaticResource AppFont}" FontSize="22" Foreground="{StaticResource AppColor}" Opacity="0.8" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
+                        </StackPanel>
+                        <WrapPanel HorizontalAlignment="Right">
+                            <Button x:Name="PART_Min"
+                                Focusable="False"
+                                Visibility="{Binding BtnMinVisibility}"    
+                                Style="{DynamicResource CaptionButtonStyle}"
+                                Padding="0" HorizontalContentAlignment="Center" 
+                                >
+                                <Label Margin="0,3,0,0" Foreground="{StaticResource AppColor}" 
+                                       FontFamily="{StaticResource IconFont}" 
+                                       Content="&#xe606;" FontSize="17" 
+                                       HorizontalContentAlignment="Center" 
+                                       Name="ButtonSkin" MouseDown="ButtonSkin_MouseDown"></Label>
+                            </Button>
+                            <Button  Name="ButtonHome" Click="ButtonHome_Click"
+                                ToolTip="官网"
+                                Focusable="False"
+                                Visibility="{Binding BtnMinVisibility}"    
+                                Style="{DynamicResource CaptionButtonStyle}"
+                                Padding="0" HorizontalContentAlignment="Center" 
+                                >
+                                <Label Foreground="{StaticResource AppColor}" 
+                                       FontFamily="{StaticResource IconFont}" 
+                                       Content="&#xe63b;" FontSize="17" 
+                                       HorizontalContentAlignment="Center" ></Label>
+                            </Button>
+                        </WrapPanel>
+
+                    </Grid>
+                    <Border Background="{DynamicResource MainColor1}" Height="2" VerticalAlignment="Bottom"></Border>
+                </Grid>
+            </Border>
+        </Grid>
+        <ProgressBar Background="Transparent" VerticalAlignment="Bottom" 
+                     Height="5" Value="2"  BorderThickness="0"
+                     Foreground="{DynamicResource MainColor2}"></ProgressBar>
+        <ResizeGrip HorizontalAlignment="Right" HorizontalContentAlignment="Right" 
+                    VerticalContentAlignment="Bottom" VerticalAlignment="Bottom"></ResizeGrip>
+    </Grid>
+</DMSkin:DMSkinWindow>
